@@ -11,9 +11,20 @@ On your Node.js server:
 import Http from 'webflux'
 const http = new Http('http://example.com')
 
-const data = await http.request({
-  method: 'get',
-  path: '/get'
-})
+// Default parameters shown
+try {
+  const data = await http.request({
+    method: 'post',
+    path: '/',
+    files: [], // Add files from input.files to do an upload
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8'
+    },
+    async: true,
+    params: {}
+  })
+} catch (err) {
+  console.log('ERROR:', err.message)
+}
 ```
 Enjoy! MIT Licensed.
