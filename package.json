@@ -1,6 +1,6 @@
 {
   "name": "webflux",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "HTTP Client for web browsers",
   "main": "index.js",
   "author": "fugroup <vidar@fugroup.net>",
