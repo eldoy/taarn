@@ -1,0 +1,24 @@
+{
+  "name": "webflux",
+  "version": "0.0.1",
+  "description": "HTTP Client for web browsers",
+  "main": "index.js",
+  "author": "fugroup <vidar@fugroup.net>",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon server.js",
+    "test": "jest --watch"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-jest": "^23.6.0",
+    "babel-preset-env": "^1.7.0",
+    "bparse": "^0.0.2",
+    "rainlog": "^0.0.1"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.js$": "babel-jest"
+    }
+  }
+}
