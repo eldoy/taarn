@@ -5,6 +5,10 @@
   "main": "index.js",
   "author": "fugroup <vidar@fugroup.net>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fugroup/webflux.git"
+  },
   "scripts": {
     "start": "nodemon server.js",
     "test": "jest --watch"
