@@ -1,11 +1,13 @@
-const fs = require('fs')
+const taarn = require('../index.js')
 
-import Http from '../lib/http.js'
-const http = new Http('http://localhost:7000')
+const url = 'http://localhost:7000'
 
-describe('Http', () => {
+describe('taarn', () => {
+  beforeAll(async () => {
+    await new Promise(r => setTimeout(r, 500))
+  })
   it('should do get', async () => {
-    const data = await http.request({
+    const data = await taarn(url, {
       method: 'get',
       path: '/get'
     })
@@ -13,7 +15,7 @@ describe('Http', () => {
   })
 
   it('should do post', async () => {
-    const data = await http.request({
+    const data = await taarn(url, {
       method: 'post',
       path: '/post'
     })
@@ -22,7 +24,7 @@ describe('Http', () => {
 
   it('should do upload', async () => {
     const file = new File([''], 'filename.txt')
-    const data = await http.request({
+    const data = await taarn(url, {
       path: '/upload',
       headers: {
         'Content-Type': 'multipart/form-data'

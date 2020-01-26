@@ -3,11 +3,11 @@
 Does ajax and uploads from the browser. It's using promises and returns JSON data.
 
 ### INSTALLATION
-```npm i webflux``` or ```yarn add webflux```
+```npm i webflux```
 
 ### USAGE
 On your Node.js server:
-```javascript
+```js
 import Http from 'webflux'
 
 // Constructor takes the URL of your server

@@ -1,6 +1,5 @@
 const http = require('http')
 const bodyparser = require('bparse')
-const log = require('rainlog')
 const url = require('url')
 
 /*******************************************
@@ -33,7 +32,7 @@ util.setPath = (req) => {
 
 // Write error message
 util.err = (res, message) => {
-  log.red(`Error message: ${message}`)
+  console.log(`Error message: ${message}`)
   util.send(res, { error: { message } })
 }
 
@@ -58,7 +57,7 @@ server.request = async (req, res) => {
   }
 
   await bodyparser(req)
-  log.request(req)
+  console.log(req.url)
 
   switch(req.path) {
     case '/get': return routes.get(req, res)
@@ -94,4 +93,4 @@ routes.upload = async (req, res) => {
 httpServer = new http.createServer()
 httpServer.on('request', server.request)
 httpServer.listen(PORT)
-log.green(`Server listening on port ${PORT}`)
+console.log(`Server listening on port ${PORT}`)
