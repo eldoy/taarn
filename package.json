@@ -1,7 +1,7 @@
 {
   "name": "taarn",
-  "version": "0.0.1",
-  "description": "HTTP Client for web browsers",
+  "version": "0.0.2",
+  "description": "Light weight HTTP Client for web browsers",
   "main": "index.js",
   "author": "Vidar Eldøy <vidar@eldoy.com>",
   "license": "MIT",
