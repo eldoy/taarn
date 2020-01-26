@@ -20,16 +20,11 @@ module.exports = function(url, options) {
 
       // Loop through each of the selected files
       for (var file of options.files) {
-        // Check the file type, regex or string matcher
-        // Example: 'image.*'
-        if (!options.match || file.type.match(options.match)) {
-          // Add the file to the request
-          formData.append(options.name, file, file.name)
-        }
+        formData.append(options.name, file, file.name)
       }
 
       if (options.progress) {
-        xhr.upload.addEventListener('progress', function (event) {
+        xhr.upload.addEventListener('progress', function(event) {
           event.percent = (event.loaded / event.total * 100).toFixed(2)
           options.progress(event)
         })
