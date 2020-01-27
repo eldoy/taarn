@@ -23,7 +23,7 @@ describe('taarn', () => {
 
   it('should do upload', async () => {
     const files = ['test/assets/hello.txt']
-    const data = await taarn(url, { path: '/upload', files })
+    const data = await taarn(url, { path: '/upload', files, progress: true })
     expect(data.success).toEqual(true)
     expect(data.urls[0]).toEqual('hello.txt')
   })

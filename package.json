@@ -1,6 +1,6 @@
 {
   "name": "taarn",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Light weight HTTP Client for web browsers",
   "main": "index.js",
   "browser": "browser.js",

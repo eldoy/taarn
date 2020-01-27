@@ -35,7 +35,7 @@ module.exports = function(url, options) {
       options.headers['content-type'] = 'application/json; charset=utf-8'
     }
 
-    request(
+    var req = request(
       {
         method: options.method || 'post',
         url: url + (options.path || '/'),
@@ -44,13 +44,27 @@ module.exports = function(url, options) {
       },
       function(err, res, data) {
         if (err) {
-          console.error(err)
           reject(err)
         } else {
-          console.log(data)
           resolve(JSON.parse(data))
         }
       }
     )
+
+    if (options.progress) {
+      var received = 0, total = 0
+      req.on('data', function(chunk) {
+        received += chunk.length
+        var percentage = (received * 100 / total).toFixed(2)
+        if (typeof options.progress === 'function') {
+          options.progress({ received, total, percentage })
+        } else {
+          process.stdout.write(`\r${ percentage }%\t\t`)
+        }
+      })
+      req.on('response', function(res) {
+        total = parseInt(res.headers['content-length'])
+      })
+    }
   })
 }
