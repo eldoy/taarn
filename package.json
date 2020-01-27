@@ -1,8 +1,9 @@
 {
   "name": "taarn",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Light weight HTTP Client for web browsers",
   "main": "index.js",
+  "browser": "browser.js",
   "author": "Vidar Eldøy <vidar@eldoy.com>",
   "license": "MIT",
   "repository": {
@@ -11,10 +12,15 @@
   },
   "scripts": {
     "start": "nodemon server.js",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "minify": "node scripts/minify.js",
+    "build": "node scripts/build.js"
   },
   "devDependencies": {
-    "bparse": "0.0.3",
-    "jest": "^25.1.0"
+    "jest": "^25.1.0",
+    "sirloin": "^0.14.8"
+  },
+  "dependencies": {
+    "request": "^2.88.0"
   }
 }
