@@ -1,6 +1,6 @@
 {
   "name": "taarn",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Light weight HTTP Client for web browsers",
   "main": "index.js",
   "browser": "browser.js",
@@ -12,9 +12,7 @@
   },
   "scripts": {
     "start": "nodemon server.js",
-    "test": "jest --watch",
-    "minify": "node scripts/minify.js",
-    "build": "node scripts/build.js"
+    "test": "jest --watch"
   },
   "devDependencies": {
     "jest": "^25.1.0",
