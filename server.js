@@ -14,6 +14,10 @@ app.post('/post', async (req, res) => {
   return { status: 'OK' }
 })
 
+app.post('/params', async (req, res) => {
+  return req.params
+})
+
 app.get('/get', async (req, res) => {
   return { status: 'OK' }
 })

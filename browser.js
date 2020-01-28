@@ -6,11 +6,6 @@ module.exports = function(url, options) {
     if (!options.headers) options.headers = {}
     if (!options.params) options.params = {}
 
-    // Encode params
-    for (var value in options.params) {
-      options.params[value] = encodeURIComponent(options.params[value])
-    }
-
     // Set up upload if we have files
     var formData
     if (options.files) {

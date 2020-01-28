@@ -2,55 +2,32 @@ var fs = require('fs')
 var fspath = require('path')
 var request = require('request')
 
-module.exports = function(url, options) {
+module.exports = function(url, options = {}) {
   return new Promise(function(resolve, reject) {
-    if (!options) options = {}
-    if (options.async !== false) options.async = true
-    if (!options.headers) options.headers = {}
-    if (!options.params) options.params = {}
-
-    // Encode params
-    for (var value in options.params) {
-      options.params[value] = encodeURIComponent(options.params[value])
+    var httpOptions = {
+      method: options.method || 'post',
+      url: url + (options.path || '/'),
+      headers: options.headers,
+      json: true
     }
-
-    var formData = {}
     if (options.files) {
-      if (!options.name) options.name = 'file'
-      formData[options.name] = []
-
-      // Loop through each of the selected files
-      for (var file of options.files) {
-        var path = fspath.join(process.cwd(), file)
-        var stream = fs.createReadStream(path)
-        formData[options.name].push(stream)
-      }
-
-      // Add content type if it doesn't exist
-      if (!options.headers['content-type']) {
-        options.headers['content-type'] = 'multipart/form-data'
-      }
-
-    } else if (!Object.keys(options.headers).map(function(x) { return x.toLowerCase() }).includes('content-type')) {
-      options.headers['content-type'] = 'application/json; charset=utf-8'
+      options.files = options.files.map(function(file) {
+        return fs.createReadStream(fspath.join(process.cwd(), file))
+      })
+      httpOptions.formData = { ...options.params, file: options.files }
+    } else {
+      httpOptions.body = options.params
     }
-
     var req = request(
-      {
-        method: options.method || 'post',
-        url: url + (options.path || '/'),
-        headers: options.headers,
-        formData
-      },
+      httpOptions,
       function(err, res, data) {
         if (err) {
           reject(err)
         } else {
-          resolve(JSON.parse(data))
+          resolve(data)
         }
       }
     )
-
     if (options.progress) {
       var received = 0, total = 0
       req.on('data', function(chunk) {
