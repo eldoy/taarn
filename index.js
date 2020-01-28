@@ -2,7 +2,7 @@ var fs = require('fs')
 var fspath = require('path')
 var request = require('request')
 
-module.exports = function(url, options = {}) {
+module.exports = function(url, params = {}, options = {}) {
   return new Promise(function(resolve, reject) {
     var httpOptions = {
       method: options.method || 'post',
@@ -14,9 +14,9 @@ module.exports = function(url, options = {}) {
       options.files = options.files.map(function(file) {
         return fs.createReadStream(fspath.join(process.cwd(), file))
       })
-      httpOptions.formData = { ...options.params, file: options.files }
+      httpOptions.formData = { ...params, file: options.files }
     } else {
-      httpOptions.body = options.params
+      httpOptions.body = params
     }
     var req = request(
       httpOptions,

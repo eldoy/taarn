@@ -1,20 +1,23 @@
-module.exports = function(url, options) {
+module.exports = function(url, params, options) {
   return new Promise(function(resolve, reject) {
     var xhr = new XMLHttpRequest()
     if (!options) options = {}
-    if (options.async !== false) options.async = true
+    if (!params) params = {}
     if (!options.headers) options.headers = {}
-    if (!options.params) options.params = {}
 
     // Set up upload if we have files
     var formData
     if (options.files) {
-      if (!options.name) options.name = 'file'
       formData = new FormData()
+
+      // Add params to form data
+      for (var key in params) {
+        formData.append(key, params[key])
+      }
 
       // Loop through each of the selected files
       for (var file of options.files) {
-        formData.append(options.name, file, file.name)
+        formData.append('file', file, file.name)
       }
 
       if (options.progress) {
@@ -24,13 +27,8 @@ module.exports = function(url, options) {
         })
       }
 
-      // Add content type if it doesn't exist
-      if (!options.headers['content-type']) {
-        options.headers['content-type'] = 'multipart/form-data'
-      }
-
-    } else if (!Object.keys(options.headers).map(function(x) { return x.toLowerCase() }).includes('content-type')) {
-      options.headers['content-type'] = 'application/json; charset=utf-8'
+      // Add content type
+      options.headers['content-type'] = 'multipart/form-data'
     }
 
     xhr.addEventListener('load', function(event) {
@@ -42,14 +40,17 @@ module.exports = function(url, options) {
       reject(xhr)
     })
 
-    xhr.open(options.method || 'post', url + (options.path || '/'), options.async)
+    xhr.open(options.method || 'post', url + (options.path || '/'))
 
     // Set headers
+    if (!options.headers['content-type']) {
+      options.headers['content-type'] = 'application/json; charset=utf-8'
+    }
     for (var header in options.headers) {
       xhr.setRequestHeader(header, options.headers[header])
     }
 
-    var data = formData || JSON.stringify(options.params)
+    var data = formData || JSON.stringify(params)
 
     // Send data to server
     xhr.send(data)
