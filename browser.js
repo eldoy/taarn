@@ -11,7 +11,6 @@ module.exports = function(url, params, options) {
       reject(xhr)
     })
     xhr.open(options.method || 'POST', url + (options.path || '/'))
-
     // Set up upload if we have files
     var data
     if (options.files) {
@@ -35,9 +34,10 @@ module.exports = function(url, params, options) {
       }
     } else {
       xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8')
-    }
 
+    }
     // Send data to server
+    xhr.withCredentials = true
     xhr.send(data || JSON.stringify(params))
   })
 }
