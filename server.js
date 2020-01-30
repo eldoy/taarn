@@ -2,15 +2,9 @@ const Sirloin = require('sirloin')
 
 const app = new Sirloin({ port: 7000 })
 
-const HEADERS = {
-  'Access-Control-Allow-Origin': 'http://localhost',
-  'Access-control-Allow-Credentials': 'true'
-}
-
 app.use(async (req, res) => {
-  for (const key in HEADERS) {
-    res.setHeader(key, HEADERS[key])
-  }
+  res.setHeader('Access-Control-Allow-Origin', 'http://localhost')
+  res.setHeader('Access-Control-Allow-Credentials', 'true')
 })
 
 app.post('/upload', async (req, res) => {
