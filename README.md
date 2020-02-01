@@ -1,42 +1,32 @@
-# HTTP Client for web browsers
+# Light weight isomorphic HTTP Client
 
-Does ajax and uploads from the browser. It's using promises and returns JSON data.
+Does ajax and uploads from the browser and NodeJS. Support for file upload progress with percentage.
 
 ### INSTALLATION
-```npm i webflux```
+```npm i taarn```
 
 ### USAGE
 On your Node.js server:
 ```js
-import Http from 'webflux'
+var taarn = require('taarn')
 
-// Constructor takes the URL of your server
-const http = new Http('http://example.com')
+// Normal usage
+var data = await taarn(url, params, options)
 
-// Default parameters shown
-try {
-  const data = await http.request({
-    url: this.url, // Override the constructor URL
-    method: 'POST', // Case insensitive
+// Usage with default options shown
+var url = 'https://example.com'
+var data = await taarn(
+  url,
+  { data: { hello: 'world' } },
+  {
+    method: 'POST',
     path: '/',
-    params: {}, // Ignored if uploading
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8'
-    },
-    async: true,
-
-    // Upload options
-    files: [], // Add files from input.files to do an upload
-    name: 'files[]', // Name of upload parameter
-    match: undefined, // Regex or string file filter, example: 'image.*'
-    progress: (event) => { // Upload progress
-      var percent = (event.loaded / event.total * 100).toFixed(2)
-      console.log(`${percent}%`)
+    files: ['filename.txt'],
+    progress: function(event) {
+      console.log(event.percent, event.total, event.loaded)
     }
-  })
-} catch (err) {
-  // Catch any errors with try / catch
-  console.log('ERROR:', err.message)
-}
+  }
+)
 ```
-Enjoy! MIT Licensed.
+
+MIT Licensed.Enjoy!
