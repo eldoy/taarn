@@ -6,7 +6,7 @@ module.exports = function(url, params = {}, options = {}) {
   return new Promise(function(resolve, reject) {
     var httpOptions = {
       method: options.method || 'post',
-      url: url + (options.path || '/'),
+      url: url + (options.path || ''),
       headers: options.headers,
       json: true
     }
