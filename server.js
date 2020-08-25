@@ -12,7 +12,7 @@ app.post('/upload', async (req, res) => {
   for (const file of req.files) {
     urls.push(file.name)
   }
-  return { success: true, urls }
+  return { success: true, urls, params: req.params }
 })
 
 app.post('/post', async (req, res) => {

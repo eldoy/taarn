@@ -17,7 +17,7 @@ module.exports = function(url, params, options) {
       data = new FormData()
       // Add params to data
       for (var key in params) {
-        data.append(key, params[key])
+        data.append(key, JSON.stringify(params[key]))
       }
       // Loop through each of the selected files
       for (var file of options.files) {

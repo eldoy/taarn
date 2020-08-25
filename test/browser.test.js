@@ -32,4 +32,13 @@ describe('taarn', () => {
     expect(data.success).toEqual(true)
     expect(data.urls[0]).toEqual('filename.txt')
   })
+
+  it('should do upload with params', async () => {
+    const files = [ new File([''], 'filename.txt') ]
+    const params = { config: { resize: [1, 2] } }
+    const data = await taarn(url, params, { path: '/upload', files })
+    expect(data.success).toEqual(true)
+    expect(data.urls[0]).toEqual('filename.txt')
+    expect(data.params.config.resize).toEqual([1, 2])
+  })
 })
