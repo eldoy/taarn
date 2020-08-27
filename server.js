@@ -5,6 +5,7 @@ const app = new Sirloin({ port: 7000 })
 app.use(async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost')
   res.setHeader('Access-Control-Allow-Credentials', 'true')
+  res.setHeader('Access-Control-Allow-Headers', 'x-custom-header')
 })
 
 app.post('/upload', async (req, res) => {
@@ -25,4 +26,8 @@ app.post('/params', async (req, res) => {
 
 app.get('/get', async (req, res) => {
   return { status: 'OK' }
+})
+
+app.post('/headers', async (req, res) => {
+  return { headers: req.headers['x-custom-header'] }
 })

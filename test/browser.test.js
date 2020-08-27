@@ -26,6 +26,11 @@ describe('taarn', () => {
     expect(data.hello).toEqual('taarn')
   })
 
+  it('should send custom headers', async () => {
+    const data = await taarn(url, { hello: 'taarn' }, { path: '/headers', headers: { 'x-custom-header': 'custom' } })
+    expect(data.headers).toEqual('custom')
+  })
+
   it('should do upload', async () => {
     const files = [ new File([''], 'filename.txt') ]
     const data = await taarn(url, {}, { path: '/upload', files })
