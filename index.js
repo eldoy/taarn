@@ -3,7 +3,7 @@ const fspath = require('path')
 const got = require('got')
 const FormData = require('form-data')
 
-module.exports = function(url, params = {}, options = {}) {
+module.exports = async function(url, params = {}, options = {}) {
   const { path = '', method = 'post', headers, progress, files } = options
   var config = {
     method,
@@ -24,5 +24,6 @@ module.exports = function(url, params = {}, options = {}) {
   } else {
     config.json = params
   }
-  return got(url + path, config)
+  const result = await got(url + path, config)
+  return result.body
 }
