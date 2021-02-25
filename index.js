@@ -15,7 +15,6 @@ module.exports = async function(url, params = {}, options = {}) {
   if (files) {
     const form = new FormData()
     for (const file of files) {
-      console.log({ file })
       const filePath = fspath.join(process.cwd(), file)
       const stream = fs.createReadStream(filePath)
       form.append('file', stream)
