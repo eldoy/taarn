@@ -12,29 +12,29 @@ describe('taarn', () => {
   })
 
   it('should do get', async () => {
-    const data = await taarn(url, {}, { method: 'get', path: '/get' })
-    expect(data.status).toEqual('OK')
+    const result = await taarn(url, {}, { method: 'get', path: '/get' })
+    expect(result.body.status).toEqual('OK')
   })
 
   it('should do post', async () => {
-    const data = await taarn(url, {}, { path: '/post' })
-    expect(data.status).toEqual('OK')
+    const result = await taarn(url, {}, { path: '/post' })
+    expect(result.body.status).toEqual('OK')
   })
 
   it('should do with params', async () => {
-    const data = await taarn(url, { hello: 'taarn' }, { path: '/params' })
-    expect(data.hello).toEqual('taarn')
+    const result = await taarn(url, { hello: 'taarn' }, { path: '/params' })
+    expect(result.body.hello).toEqual('taarn')
   })
 
   it('should send custom headers', async () => {
-    const data = await taarn(url, { hello: 'taarn' }, { path: '/headers', headers: { 'x-custom-header': 'custom' } })
-    expect(data.headers).toEqual('custom')
+    const result = await taarn(url, { hello: 'taarn' }, { path: '/headers', headers: { 'x-custom-header': 'custom' } })
+    expect(result.body.headers).toEqual('custom')
   })
 
   it('should do upload', async () => {
     const files = ['test/assets/hello.txt']
-    const data = await taarn(url, {}, { path: '/upload', files, progress: true })
-    expect(data.success).toEqual(true)
-    expect(data.urls[0]).toEqual('hello.txt')
+    const result = await taarn(url, {}, { path: '/upload', files, progress: true })
+    expect(result.body.success).toEqual(true)
+    expect(result.body.urls[0]).toEqual('hello.txt')
   })
 })

@@ -1,47 +1,28 @@
-var fs = require('fs')
-var fspath = require('path')
-var request = require('request')
+const fs = require('fs')
+const fspath = require('path')
+const got = require('got')
+const FormData = require('form-data')
 
 module.exports = function(url, params = {}, options = {}) {
-  return new Promise(function(resolve, reject) {
-    var httpOptions = {
-      method: options.method || 'post',
-      url: url + (options.path || ''),
-      headers: options.headers,
-      json: true
+  const { path = '', method = 'post', headers, progress, files } = options
+  var config = {
+    method,
+    headers,
+    responseType: 'json',
+    allowGetBody: true
+  }
+
+  if (files) {
+    const form = new FormData()
+    for (const file of files) {
+      console.log({ file })
+      const filePath = fspath.join(process.cwd(), file)
+      const stream = fs.createReadStream(filePath)
+      form.append('file', stream)
     }
-    if (options.files) {
-      options.files = options.files.map(function(file) {
-        return fs.createReadStream(fspath.join(process.cwd(), file))
-      })
-      httpOptions.formData = { ...params, file: options.files }
-    } else {
-      httpOptions.body = params
-    }
-    var req = request(
-      httpOptions,
-      function(err, res, data) {
-        if (err) {
-          reject(err)
-        } else {
-          resolve(data)
-        }
-      }
-    )
-    if (options.progress) {
-      var received = 0, total = 0
-      req.on('data', function(chunk) {
-        received += chunk.length
-        var percentage = (received * 100 / total).toFixed(2)
-        if (typeof options.progress === 'function') {
-          options.progress({ received, total, percentage })
-        } else {
-          process.stdout.write(`\r${ percentage }%\t\t`)
-        }
-      })
-      req.on('response', function(res) {
-        total = parseInt(res.headers['content-length'])
-      })
-    }
-  })
+    config.body = form
+  } else {
+    config.json = params
+  }
+  return got(url + path, config)
 }

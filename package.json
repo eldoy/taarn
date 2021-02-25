@@ -19,6 +19,7 @@
     "sirloin": "^0.19.6"
   },
   "dependencies": {
-    "request": "^2.88.2"
+    "form-data": "^2.3.3",
+    "got": "^11.8.1"
   }
 }
