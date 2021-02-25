@@ -1,6 +1,6 @@
-const Sirloin = require('sirloin')
+const sirloin = require('sirloin')
 
-const app = new Sirloin({ port: 7000 })
+const app = sirloin({ port: 7000 })
 
 app.use(async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost')
