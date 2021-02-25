@@ -37,4 +37,12 @@ describe('taarn', () => {
     expect(result.success).toEqual(true)
     expect(result.urls[0]).toEqual('hello.txt')
   })
+
+  it('should do upload with params', async () => {
+    const files = ['test/assets/hello.txt']
+    const result = await taarn(url, { hello: 'taarn' }, { path: '/upload', files, progress: true })
+    expect(result.success).toEqual(true)
+    expect(result.urls[0]).toEqual('hello.txt')
+    expect(result.params).toEqual({ hello: 'taarn' })
+  })
 })

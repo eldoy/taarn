@@ -19,6 +19,9 @@ module.exports = async function(url, params = {}, options = {}) {
       const stream = fs.createReadStream(filePath)
       form.append('file', stream)
     }
+    for (const name in params) {
+      form.append(name, params[name])
+    }
     config.body = form
   } else {
     config.json = params
