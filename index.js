@@ -3,15 +3,15 @@ const fspath = require('path')
 const got = require('got')
 const FormData = require('form-data')
 
-module.exports = async function(url, params = {}, options = {}) {
-  const { path = '', method = 'post', headers, progress, files } = options
-  var config = {
-    method,
-    headers,
-    responseType: 'json',
-    allowGetBody: true
-  }
+const DEFAULT_OPTIONS = {
+  method: 'post',
+  responseType: 'json',
+  allowGetBody: true
+}
 
+module.exports = async function(url, params = {}, options = {}) {
+  options = Object.assign({}, DEFAULT_OPTIONS, options)
+  const { path = '', progress, files, ...config } = options
   if (files) {
     const form = new FormData()
     for (const file of files) {
